@@ -1,11 +1,8 @@
 package ru.yandex.practicum.filmorate.model;
 
-
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.*;
 import javax.validation.executable.ValidateOnExecution;
@@ -15,18 +12,21 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @ValidateOnExecution
-@FieldDefaults (makeFinal=true, level= AccessLevel.PRIVATE)
+
 public class User {
 
-     Integer id;
+    private Integer id;
     @Email(message = "Incorrect Email!")
-     String email;
+    private String email;
     @NotBlank(message = "Incorrect login!")
     @Pattern(regexp = "^\\S*$", message = "Incorrect login!")
-     String login;
-     String name;
+    private String login;
+
+
+    private String name;
+    @NotNull
     @PastOrPresent(message = "Incorrect date!")
-     LocalDate birthday;
+    private LocalDate birthday;
 
 
 }
