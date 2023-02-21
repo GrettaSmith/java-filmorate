@@ -26,7 +26,7 @@ public class User {
 
 
      String name;
-    @NotNull
+
     @PastOrPresent(message = "Incorrect date!")
      LocalDate birthday;
 
