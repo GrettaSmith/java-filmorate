@@ -15,18 +15,20 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @ValidateOnExecution
-@FieldDefaults (level= AccessLevel.PRIVATE)
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class Film {
 
-
      Integer id;
-    String name;
+    @NotEmpty(message = "Empty name!")
+    @NotNull
+     String name;
     @Size(min = 2, max = 200, message = "Description should be not empty & less then 200")
-    String description;
+    @NotEmpty
+     String description;
 
     @PastOrPresent(message = "Incorrect date!")
     @CorrectDate
-    LocalDate releaseDate;
+     LocalDate releaseDate;
     @Positive
-    Long duration;
+     Long duration;
 }
