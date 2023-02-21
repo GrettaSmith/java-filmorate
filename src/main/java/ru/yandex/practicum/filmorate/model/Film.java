@@ -1,11 +1,10 @@
 package ru.yandex.practicum.filmorate.model;
 
-
-
-
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.validator.CorrectDate;
 
 import javax.validation.constraints.*;
@@ -16,19 +15,18 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @ValidateOnExecution
+@FieldDefaults (makeFinal=true, level= AccessLevel.PRIVATE)
 public class Film {
 
-    private Integer id;
-    @NotEmpty(message = "Empty name!")
-    @NotNull
-    private String name;
+
+    Integer id;
+    String name;
     @Size(min = 2, max = 200, message = "Description should be not empty & less then 200")
-    @NotEmpty
-    private String description;
+    String description;
 
     @PastOrPresent(message = "Incorrect date!")
     @CorrectDate
-    private LocalDate releaseDate;
+    LocalDate releaseDate;
     @Positive
-    private Long duration;
+    Long duration;
 }
