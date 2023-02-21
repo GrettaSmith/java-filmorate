@@ -15,11 +15,11 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @ValidateOnExecution
-@FieldDefaults (makeFinal=true, level= AccessLevel.PRIVATE)
+@FieldDefaults (level= AccessLevel.PRIVATE)
 public class Film {
 
 
-    Integer id;
+     Integer id;
     String name;
     @Size(min = 2, max = 200, message = "Description should be not empty & less then 200")
     String description;
