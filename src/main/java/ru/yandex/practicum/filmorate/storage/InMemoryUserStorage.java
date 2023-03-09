@@ -14,7 +14,7 @@ public class InMemoryUserStorage implements UserStorage {
     private Integer id = 0;
 
     @Override
-    public User addUser(User user) {
+    public User create(User user) {
         id += 1;
         user.setId(id);
         userList.put(user.getId(), user);
@@ -22,12 +22,12 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public List<User> getUsersList() {
+    public List<User> getAll() {
         return new ArrayList<>(userList.values());
     }
 
     @Override
-    public User getUserById(Integer id) {
+    public User get(int id) {
         if (!userList.containsKey(id)) {
             throw new NotFoundException("User not found!");
         }
@@ -35,7 +35,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User update(User user) {
         if (userList.containsKey(user.getId())) {
             userList.put(user.getId(), user);
         } else {

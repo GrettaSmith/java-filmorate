@@ -3,17 +3,17 @@ package ru.yandex.practicum.filmorate.storage;
 import ru.yandex.practicum.filmorate.exceptions.DuplicateException;
 import ru.yandex.practicum.filmorate.model.Film;
 
+import java.util.HashMap;
 import java.util.List;
 
-public interface FilmStorage {
+public interface FilmStorage extends Storage <Film>{
+     final HashMap<Integer, Film> filmsList = new HashMap<>();
+    List<Film> getAll();
 
-    List<Film> getFilmsList();
+    Film get(int id);
 
-    Film getFilmById(int id);
+    Film create(Film film) throws DuplicateException;
 
-    Film addFilm(Film film) throws DuplicateException;
+    Film update(Film film);
 
-    Film updateFilm(Film film);
-
-    List<Film> getMostPopularFilms(int count);
 }

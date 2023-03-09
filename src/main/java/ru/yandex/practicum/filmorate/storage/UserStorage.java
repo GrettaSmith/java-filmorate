@@ -6,14 +6,14 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.util.List;
 import java.util.Set;
 
-public interface UserStorage {
+public interface UserStorage extends Storage <User>{
 
-    List<User> getUsersList();
+    List<User> getAll();
 
-    User getUserById(Integer id);
+    User get(int id);
 
-    User addUser(User user);
+    User create(User user);
 
-    User updateUser(User user);
+    User update(User user);
 
 }

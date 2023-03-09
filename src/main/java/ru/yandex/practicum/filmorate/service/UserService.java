@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import com.sun.source.tree.UsesTree;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -7,10 +8,7 @@ import ru.yandex.practicum.filmorate.exceptions.DuplicateException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -19,34 +17,36 @@ public class UserService {
     private final UserStorage userStorage;
 
     public List<User> getUsersList() {
-        return userStorage.getUsersList();
+        return userStorage.getAll();
     }
 
     public User addUser(User user) {
         if (user.getName() == null || user.getName().equals("")) {
             user.setName(user.getLogin());
         }
-        return userStorage.addUser(user);
+        return userStorage.create(user);
     }
 
     public User updateUser(User user) {
         if (user.getName() == null || user.getName().equals("")) {
             user.setName(user.getLogin());
         }
-        return userStorage.updateUser(user);
+        return userStorage.update(user);
     }
 
     public User getUserById(Integer id) {
-        return userStorage.getUserById(id);
+        return userStorage.get(id);
     }
 
-    public List<User> getUsersFrendsList(Integer id) {
+    public List <User> getUsersFrendsList(Integer id) {
         User user = getUserById(id);
-        List<User> friendList = new ArrayList<>();
+        List <User> friendList1 = null;
         for (Integer friendId : user.getFriends()) {
-            friendList.add(getUserById(friendId));
+            friendList1 = new ArrayList<>((Collection) getUserById(friendId));
         }
-        return friendList;
+
+
+        return friendList1;
     }
 
     public Set<User> getUsersCommonFriends(Integer id, Integer otherId) {
@@ -69,8 +69,8 @@ public class UserService {
         User user1 = getUserById(friendId);
         user.getFriends().add(friendId);
         user1.getFriends().add(id);
-        userStorage.updateUser(user);
-        userStorage.updateUser(user1);
+        userStorage.update(user);
+        userStorage.update(user1);
         return user;
     }
 
@@ -82,8 +82,8 @@ public class UserService {
         }
         user.getFriends().remove(friendId);
         user1.getFriends().remove(id);
-        userStorage.updateUser(user);
-        userStorage.updateUser(user1);
+        userStorage.update(user);
+        userStorage.update(user1);
         return user;
     }
 
