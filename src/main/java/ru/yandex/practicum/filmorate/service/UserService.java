@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.service;
 
-import com.sun.source.tree.UsesTree;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,10 @@ import ru.yandex.practicum.filmorate.exceptions.DuplicateException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -38,15 +40,13 @@ public class UserService {
         return userStorage.get(id);
     }
 
-    public List <User> getUsersFrendsList(Integer id) {
+    public List<User> getUsersFrendsList(Integer id) {
         User user = getUserById(id);
-        List <User> friendList1 = null;
+        List<User> friendList = new ArrayList<>();
         for (Integer friendId : user.getFriends()) {
-            friendList1 = new ArrayList<>((Collection) getUserById(friendId));
+            friendList.add(getUserById(friendId));
         }
-
-
-        return friendList1;
+        return friendList;
     }
 
     public Set<User> getUsersCommonFriends(Integer id, Integer otherId) {
