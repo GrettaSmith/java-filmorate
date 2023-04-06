@@ -8,59 +8,61 @@ import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
-import ru.yandex.practicum.filmorate.util.LikesComparator;
 
-import java.util.Comparator;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class FilmService {
+
     private final FilmStorage filmStorage;
     private final UserStorage userStorage;
-    private final Comparator<Film> likesComparator = new LikesComparator();
-    protected final Set<Film> filmsRating = new TreeSet<>(likesComparator);
 
-    public List<Film> getFilmsList() {
-        return filmStorage.getAll();
+    public List<Film> getFilmsList() throws SQLException {
+        return filmStorage.getFilmsList();
     }
 
     public Film getFilmById(Integer id) {
-        return filmStorage.get(id);
+        return filmStorage.getFilmById(id);
     }
 
     public Film addFilm(Film film) throws DuplicateException {
-        return filmStorage.create(film);
+        if (film.getGenres() == null) {
+            film.setGenres(new ArrayList<>());
+        }
+        return filmStorage.addFilm(film);
     }
 
     public Film updateFilm(Film film) {
-        return filmStorage.update(film);
+        if (film.getGenres() == null) {
+            film.setGenres(new ArrayList<>());
+        }
+        return filmStorage.updateFilm(film);
     }
 
-    public Film likeFilm(Integer id, Integer userId) {
-        userStorage.get(userId); // немного костыль, но как мне кажется, самы простой способ проверить, что юзер есть - если его нет, то будет исключние
-        Film film = filmStorage.get(id);
-        film.getUserLikes().add(userId);
-        filmStorage.update(film);
+    public Film likeFilm(Integer id, Integer userId) throws DuplicateException {
+        userStorage.getUserById(userId);
+        Film film = filmStorage.getFilmById(id);
+        if (film.getUserLikes().contains(userId)) {
+            throw new DuplicateException("You already liked it!");
+        }
+        filmStorage.addFilmLike(id, userId);
         return film;
     }
 
     public Film unlikeFilm(Integer id, Integer userId) {
-        Film film = filmStorage.get(id);
+        Film film = filmStorage.getFilmById(id);
         if (!film.getUserLikes().contains(userId)) {
-            throw new NotFoundException("Film not found!");
+            throw new NotFoundException("User not found!");
         }
-        film.getUserLikes().remove(userId);
-        filmStorage.update(film);
+        filmStorage.deleteFilmLike(id, userId);
         return film;
     }
 
-    public List<Film> getMostPopularFilms(int count) {
-        filmsRating.addAll(filmStorage.filmsList.values());
-        return filmsRating.stream().limit(count).collect(Collectors.toList());
+    public List<Film> getMostPopularFilms(Integer count) throws SQLException {
+        return filmStorage.getMostPopularFilms(count);
     }
 }
