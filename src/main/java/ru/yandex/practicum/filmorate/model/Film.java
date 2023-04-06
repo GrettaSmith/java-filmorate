@@ -1,37 +1,37 @@
 package ru.yandex.practicum.filmorate.model;
 
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.filmorate.validator.CorrectDate;
 
 import javax.validation.constraints.*;
 import javax.validation.executable.ValidateOnExecution;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Builder
 @ValidateOnExecution
-@FieldDefaults(level= AccessLevel.PRIVATE)
 public class Film {
 
-     Integer id;
+    private Integer id;
     @NotEmpty(message = "Empty name!")
     @NotNull
-     String name;
+    private String name;
     @Size(min = 2, max = 200, message = "Description should be not empty & less then 200")
     @NotEmpty
-     String description;
+    private String description;
 
     @PastOrPresent(message = "Incorrect date!")
     @CorrectDate
-     LocalDate releaseDate;
+    private LocalDate releaseDate;
     @Positive
-     Long duration;
-
+    private Long duration;
+    private List<Genre> genres;
+    private MPARating mpa;
     private final Set<Integer> userLikes = new HashSet<>();
+
 }
