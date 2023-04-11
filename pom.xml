@@ -12,7 +12,9 @@
     <artifactId>filmorate</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>filmorate</name>
-    <description>бэкенд для сервиса, который будет работать с фильмами и оценками пользователей, а также возвращать топ-5 фильмов, рекомендованных к просмотру.</description>
+    <description>бэкенд для сервиса, который будет работать с фильмами и оценками пользователей, а также возвращать
+        топ-5 фильмов, рекомендованных к просмотру.
+    </description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -24,9 +26,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -37,6 +37,21 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
