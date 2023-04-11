@@ -30,4 +30,4 @@ public class User {
 
     private final Set<Integer> friends = new HashSet<>();
     private final Set<Integer> unacceptedFriends = new HashSet<>();
-}
+} 
