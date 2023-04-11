@@ -6,9 +6,9 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface FilmStorage extends Storage   <Film>  {
+public interface FilmStorage {
 
-    List <Film> getFilmsList() throws SQLException;
+    List<Film> getFilmsList() throws SQLException;
 
     Film getFilmById(int id);
 
@@ -20,5 +20,5 @@ public interface FilmStorage extends Storage   <Film>  {
 
     Film deleteFilmLike(Integer id, Integer userId);
 
-    List <Film> getMostPopularFilms(int count) throws SQLException;
+    List<Film> getMostPopularFilms(int count) throws SQLException;
 }
