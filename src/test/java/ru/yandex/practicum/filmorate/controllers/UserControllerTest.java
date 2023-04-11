@@ -41,8 +41,7 @@ class UserControllerTest {
 
     @Test
     void getUserList() throws Exception {
-        this.mvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/users")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        this.mvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/users").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 
     @Test
