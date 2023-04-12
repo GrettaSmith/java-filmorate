@@ -16,7 +16,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @ValidateOnExecution
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
      Integer id;
     @Email(message = "Incorrect Email!")
@@ -27,8 +27,10 @@ public class User {
 
      String name;
 
+    @NotNull
     @PastOrPresent(message = "Incorrect date!")
      LocalDate birthday;
 
      final Set<Integer> friends = new HashSet<>();
+     final Set<Integer> unacceptedFriends = new HashSet<>();
 }

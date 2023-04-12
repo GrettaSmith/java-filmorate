@@ -11,12 +11,13 @@ import javax.validation.constraints.*;
 import javax.validation.executable.ValidateOnExecution;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Builder
 @ValidateOnExecution
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Film {
 
      Integer id;
@@ -32,6 +33,8 @@ public class Film {
      LocalDate releaseDate;
     @Positive
      Long duration;
+     List<Genre> genres;
+     MPARating mpa;
+     final Set<Integer> userLikes = new HashSet<>();
 
-    private final Set<Integer> userLikes = new HashSet<>();
 }

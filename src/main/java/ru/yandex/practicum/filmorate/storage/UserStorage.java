@@ -6,14 +6,20 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.util.List;
 import java.util.Set;
 
-public interface UserStorage extends Storage <User>{
+public interface UserStorage {
 
-    List<User> getAll();
+    List<User> getUsersList();
 
-    User get(int id);
+    User getUserById(Integer id) throws DuplicateException;
 
-    User create(User user);
+    User addUser(User user) throws DuplicateException;
 
-    User update(User user);
+    Set<User> getCommonFriends(int id, int friendId);
+
+    User updateUser(User user) throws DuplicateException;
+
+    int addFriend(Integer id, Integer friendId) throws DuplicateException;
+
+    int deleteFriend(Integer id, Integer friendId);
 
 }

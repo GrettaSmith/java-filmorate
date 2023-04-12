@@ -5,7 +5,10 @@ import ru.yandex.practicum.filmorate.exceptions.DuplicateException;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 
 @Component
@@ -14,7 +17,7 @@ public class InMemoryUserStorage implements UserStorage {
     private Integer id = 0;
 
     @Override
-    public User create(User user) {
+    public User addUser(User user) {
         id += 1;
         user.setId(id);
         userList.put(user.getId(), user);
@@ -22,12 +25,12 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getUsersList() {
         return new ArrayList<>(userList.values());
     }
 
     @Override
-    public User get(int id) {
+    public User getUserById(Integer id) {
         if (!userList.containsKey(id)) {
             throw new NotFoundException("User not found!");
         }
@@ -35,12 +38,27 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public User update(User user) {
+    public User updateUser(User user) {
         if (userList.containsKey(user.getId())) {
             userList.put(user.getId(), user);
         } else {
             throw new NotFoundException("User inst registered!");
         }
         return user;
+    }
+
+    @Override
+    public Set<User> getCommonFriends(int id, int friendId) {
+        return null;
+    }
+
+    @Override
+    public int addFriend(Integer id, Integer friendId) throws DuplicateException {
+        return 0; //аналогично классу фильма
+    }
+
+    @Override
+    public int deleteFriend(Integer id, Integer friendId) {
+        return 0;
     }
 }
