@@ -56,7 +56,7 @@ public class FilmService {
     public Film unlikeFilm(Integer id, Integer userId) {
         Film film = filmStorage.getFilmById(id);
         if (!film.getUserLikes().contains(userId)) {
-            throw new NotFoundException("User not found!");
+            throw new NotFoundException("User: " + userId + " not found!");
         }
         filmStorage.deleteFilmLike(id, userId);
         return film;

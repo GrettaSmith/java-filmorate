@@ -15,7 +15,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     protected final Set<Film> filmsRating = new TreeSet<>(likesComparator);
 
     private final HashMap<Integer, Film> filmsList = new HashMap<>();
-    private int id = 0;
+    private int id;
 
     @Override
     public List<Film> getFilmsList() {
